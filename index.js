@@ -87,9 +87,16 @@ var WebDriverInstance = function (baseBrowserDecorator, args, logger) {
       self.browser.title();
     }, args.pseudoActivityInterval);
 
-    self.browser
-        .get(url)
-        .done();
+    if (spec.browserName === 'firefox') {
+        self.browser
+            .keys([wd.SPECIAL_KEYS.Tab, wd.SPECIAL_KEYS.Tab])
+            .get(url)
+            .done();
+    } else {
+        self.browser
+            .get(url)
+            .done();
+    }
 
     self._process = {
       kill: function() {
